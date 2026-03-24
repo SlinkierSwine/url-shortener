@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 
-from api.views import router
+from links.routes import router as links_router
 from config import settings, logging
+from db import init_db
 
 
 if settings.DEBUG:
@@ -9,7 +10,9 @@ if settings.DEBUG:
 else:
     logging.setup_logging('INFO')
 
+init_db()
+
 app = FastAPI(title=settings.APP_NAME)
 
-app.include_router(router)
+app.include_router(links_router)
 
