@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import RedirectResponse
-from pydantic import HttpUrl
 
 from links.schemas import LinkCreate, LinkResponse, ShortIdResponse
 from links.services import LinkService, get_link_service
