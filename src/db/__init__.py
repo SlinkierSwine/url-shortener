@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from db.base import SessionLocal, Base, engine
+from db.base import SessionLocal
 
 
 def get_db() -> Session:
@@ -9,6 +9,3 @@ def get_db() -> Session:
     finally:
         db.close()
 
-
-def init_db() -> None:
-    Base.metadata.create_all(bind=engine)
