@@ -42,7 +42,7 @@ class LinkService:
 
         logger.error(
             f'Failed to generate unique short_id after'
-            f'{self.MAX_INTEGRITY_ERROR_RETRIES} attempts',
+            f' {self.MAX_INTEGRITY_ERROR_RETRIES} attempts',
         )
         raise LinkIntegrityError(
             'Failed to generate unique short_id, try again later'

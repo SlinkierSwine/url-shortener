@@ -36,8 +36,8 @@ def f_db() -> Iterator[Session]:
 @pytest.fixture(scope="function")
 def f_client(f_db: Session) -> Iterator[TestClient]:
     # to use sqlite instead of postgres
-    def override_get_db() -> Session:
-        return f_db
+    def override_get_db() -> Iterator[Session]:
+        yield f_db
 
     app.dependency_overrides[get_db] = override_get_db
 
