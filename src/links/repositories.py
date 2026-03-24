@@ -1,3 +1,4 @@
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from links.models import Link
@@ -15,10 +16,15 @@ class LinkRepository:
             original_url=url,
             short_id=short_id,
         )
-        self._db.add(link)
-        self._db.commit()
-        self._db.refresh(link)
-        return link
+        try:
+            self._db.add(link)
+            self._db.commit()
+            self._db.refresh(link)
+            return link
+        except IntegrityError:
+            # to finish the transaction
+            self._db.rollback()
+            raise
     
     def increment_clicks(self, link: Link) -> None:
         link.clicks += 1

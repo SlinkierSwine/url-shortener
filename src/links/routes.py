@@ -4,6 +4,7 @@ from pydantic import HttpUrl
 
 from links.schemas import LinkResponse, ShortIdResponse
 from links.services import LinkService, get_link_service
+from links.exceptions import LinkIntegrityError
 
 
 router = APIRouter()
@@ -35,7 +36,11 @@ def shorten(
     url: HttpUrl,
     link_service: LinkService = Depends(get_link_service)
 ) -> ShortIdResponse:
-    link = link_service.shorten(str(url))
+    try:
+        link = link_service.shorten(str(url))
+    except LinkIntegrityError as e:
+        raise HTTPException(400, str(e))
+
     return ShortIdResponse(short_id=link.short_id)
 
 
