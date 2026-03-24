@@ -8,7 +8,7 @@ class LinkResponse(BaseModel):
 
 
 class ShortIdResponse(BaseModel):
-    short_id: str
+    short_url: HttpUrl
 
 
 class LinkCreate(BaseModel):

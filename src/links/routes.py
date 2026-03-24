@@ -37,11 +37,11 @@ def shorten(
     link_service: LinkService = Depends(get_link_service)
 ) -> ShortIdResponse:
     try:
-        link = link_service.shorten(str(data.url))
+        short_url = link_service.shorten(str(data.url))
     except LinkIntegrityError as e:
         raise HTTPException(400, str(e))
 
-    return ShortIdResponse(short_id=link.short_id)
+    return ShortIdResponse(short_url=short_url)
 
 
 @router.get("/{short_id}")

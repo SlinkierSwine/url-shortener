@@ -31,12 +31,13 @@ class LinkService:
         self._repo.increment_clicks(link)
         return link.original_url
 
-    def shorten(self, url: str) -> Link:
+    def shorten(self, url: str) -> str:
         short_id = generate_short_id()
 
         for _ in range(self.MAX_INTEGRITY_ERROR_RETRIES):
             try:
-                return self._repo.create(url, short_id)
+                link = self._repo.create(url, short_id)
+                return link.short_url
             except IntegrityError:
                 continue
 

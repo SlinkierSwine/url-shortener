@@ -14,7 +14,7 @@ def m_repo() -> Mock:
 
 @pytest.fixture
 def m_link() -> Mock:
-    return Mock(original_url='url')
+    return Mock(original_url='url', short_url='shorturl')
 
 
 def test_shorten_retry_on_integrity_error(
@@ -29,7 +29,7 @@ def test_shorten_retry_on_integrity_error(
     service = LinkService(m_repo)
     shorten_link = service.shorten('test')
 
-    assert shorten_link == m_link
+    assert shorten_link == m_link.short_url
     assert m_repo.create.call_count == 2
     
 
